@@ -15,18 +15,21 @@
     {
         private static readonly char[] delimeterChars = new char[] {' ', ',', '=', '-', '|', '>', '<', '(', ')', '?', '!', '.', '@', '/', '_', '\\', ':', '\"', '*'};
 
-        public static void CreateInvertedIndex(Dictionary<string, HashSet<int>> invertedIndex, string file)
+        public static void CreateInvertedIndex(Dictionary<string, HashSet<int>> invertedIndex)
         {
-            var upperedFileText = File.ReadAllText(file).ToUpper();
-            Document document = new Document(int.Parse(Path.GetFileName(file)), upperedFileText);
-                var splitedDocument = upperedFileText.Split(delimeterChars);
-                foreach (var word in splitedDocument)
-                {
-                    if (!invertedIndex.ContainsKey(word))
-                        invertedIndex[word] = new HashSet<int>();
-                    else
-                        invertedIndex[word].Add(document.Number);
-                }
+            foreach (string file in Directory.EnumerateFiles(@"C:\Users\h.sabour\Documents\VScode\C#\Full-Text Search-A1\EnglishData"))
+            {
+                var upperedFileText = File.ReadAllText(file).ToUpper();
+                Document document = new Document(int.Parse(Path.GetFileName(file)), upperedFileText);
+                    var splitedDocument = upperedFileText.Split(delimeterChars);
+                    foreach (var word in splitedDocument)
+                    {
+                        if (!invertedIndex.ContainsKey(word))
+                            invertedIndex[word] = new HashSet<int>();
+                        else
+                            invertedIndex[word].Add(document.Number);
+                    }
+            }
         }
 
         public static void FindWord(string word, Dictionary<string, HashSet<int>> invertedIndex)
@@ -40,8 +43,8 @@
         public static void Main(string[] args)
         {
             var invertedIndex = new Dictionary<string, HashSet<int>>();
-            foreach (string file in Directory.EnumerateFiles(@"C:\Users\h.sabour\Documents\VScode\C#\Full-Text Search-A1\EnglishData"))
-                CreateInvertedIndex(invertedIndex, file);   
+            
+            CreateInvertedIndex(invertedIndex);
             
             var input = Console.ReadLine().ToUpper();
 
