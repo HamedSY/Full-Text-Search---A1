@@ -15,22 +15,21 @@
     {
         private static readonly char[] delimeterChars = new char[] {' ', ',', '=', '-', '|', '>', '<', '(', ')', '?', '!', '.', '@', '/', '_', '\\', ':', '\"', '*'};
 
-        public static Dictionary<string, List<int>> CreateInvertedIndex(List<string> terms, List<Document> documents)
+        public static void CreateInvertedIndex(Dictionary<string, HashSet<int>> invertedIndex, string file)
         {
-            var invertedIndex = new Dictionary<string, List<int>>();
-            foreach (var term in terms)
-            {
-                var appropriateDocs = new List<int>();
-                foreach (var doc in documents)
-                    if (doc.Content.Split(delimeterChars).Contains(term))
-                        appropriateDocs.Add(doc.Number);
-
-                invertedIndex[term] = appropriateDocs;
-            }
-            return invertedIndex;
+            var upperedFileText = File.ReadAllText(file).ToUpper();
+            Document document = new Document(int.Parse(Path.GetFileName(file)), upperedFileText);
+                var splitedDocument = upperedFileText.Split(delimeterChars);
+                foreach (var word in splitedDocument)
+                {
+                    if (!invertedIndex.ContainsKey(word))
+                        invertedIndex[word] = new HashSet<int>();
+                    else
+                        invertedIndex[word].Add(document.Number);
+                }
         }
 
-        public static void FindWord(string word, Dictionary<string, List<int>> invertedIndex)
+        public static void FindWord(string word, Dictionary<string, HashSet<int>> invertedIndex)
         {
             if (invertedIndex.TryGetValue(word, out _))
                 foreach (int docNumber in invertedIndex[word])
@@ -40,18 +39,9 @@
         
         public static void Main(string[] args)
         {
-            var documents = new List<Document>();
-            var allWords = new List<string>();
-            foreach (string file in Directory.EnumerateFiles("EnglishData"))
-            {
-                var upperedfile = File.ReadAllText(file).ToUpper();
-                documents.Add(new Document(int.Parse(Path.GetFileName(file)), upperedfile));
-                var splitedDocument = upperedfile.Split(delimeterChars);
-                allWords.AddRange(splitedDocument);
-            }
-            var terms = allWords.ToHashSet().ToList();
-
-            var invertedIndex = CreateInvertedIndex(terms, documents);
+            var invertedIndex = new Dictionary<string, HashSet<int>>();
+            foreach (string file in Directory.EnumerateFiles(@"C:\Users\h.sabour\Documents\VScode\C#\Full-Text Search-A1\EnglishData"))
+                CreateInvertedIndex(invertedIndex, file);   
             
             var input = Console.ReadLine().ToUpper();
 
