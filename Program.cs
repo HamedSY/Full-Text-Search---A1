@@ -17,7 +17,7 @@
 
         public static void CreateInvertedIndex(Dictionary<string, HashSet<int>> invertedIndex)
         {
-            foreach (string file in Directory.EnumerateFiles(@"C:\Users\h.sabour\Documents\VScode\C#\Full-Text Search-A1\EnglishData"))
+            foreach (string file in Directory.EnumerateFiles("EnglishData"))
             {
                 var upperedFileText = File.ReadAllText(file).ToUpper();
                 Document document = new Document(int.Parse(Path.GetFileName(file)), upperedFileText);
