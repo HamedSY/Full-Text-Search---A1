@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-
-namespace FullTextSearch
+﻿namespace FullTextSearch
 {
     public class Document
     {
