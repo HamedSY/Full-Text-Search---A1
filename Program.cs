@@ -17,6 +17,29 @@ namespace FullTextSearch
     public class Program
     {
         private static readonly char[] delimeterChars = new char[] {' ', ',', '=', '-', '|', '>', '<', '(', ')', '?', '!', '.', '@', '/', '_', '\\', ':', '\"', '*'};
+
+        public static Dictionary<string, List<int>> CreateInvertedIndex(List<string> terms, List<Document> documents)
+        {
+            var invertedIndex = new Dictionary<string, List<int>>();
+            foreach (var term in terms)
+            {
+                var appropriateDocs = new List<int>();
+                foreach (var doc in documents)
+                    if (doc.Content.Split(delimeterChars).Contains(term))
+                        appropriateDocs.Add(doc.Number);
+
+                invertedIndex[term] = appropriateDocs;
+            }
+            return invertedIndex;
+        }
+
+        public static void FindWord(string word, Dictionary<string, List<int>> invertedIndex)
+        {
+            if (invertedIndex.TryGetValue(word, out _))
+                foreach (int docNumber in invertedIndex[word])
+                    Console.WriteLine(docNumber);
+            else Console.WriteLine("Couldn't find your term :(");
+        }
         
         public static void Main(string[] args)
         {
@@ -29,19 +52,13 @@ namespace FullTextSearch
                 var splitedDocument = upperedfile.Split(delimeterChars);
                 allWords.AddRange(splitedDocument);
             }
-            var terms = allWords.ToHashSet().ToArray();
-            var invertedIndex = new Dictionary<string, List<int>>();
+            var terms = allWords.ToHashSet().ToList();
 
-            foreach (var term in terms)
-            {
-                var appropriateDocs = new List<int>();
-                foreach (var doc in documents)
-                    if (doc.Content.Split(delimeterChars).Contains(term))
-                        appropriateDocs.Add(doc.Number);
+            var invertedIndex = CreateInvertedIndex(terms, documents);
+            
+            var input = Console.ReadLine().ToUpper();
 
-                invertedIndex[term] = appropriateDocs;
-            }
-
+            FindWord(input, invertedIndex);
         }
     }
 }
