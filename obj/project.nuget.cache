@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Wo39sYe+aeA6iJuruoiGzsdqp39gtBNxrYHJ2h1+jvz0VfoCrxERQ8NAy1c56V1NctlIoiRwYGJZA+akI/9l3g==",
+  "dgSpecHash": "jhdgsGl4VpyJl+5hL8QsEgoo2+NVCXS8lXkgvVhHOVe+QnSwC8bN/7c8P5B3YrfV1Z5vIC22DcdiVQa98mE6Ag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\h.sabour\\Documents\\RiderProjects\\Full-Text Search-A1\\Full-Text-Search-A1\\Full-Text Search - A1.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\h.sabour\\Documents\\RiderProjects\\Full-Text-Search-A1\\FullTextSearchA1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\h.sabour\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\h.sabour\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
